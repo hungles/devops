@@ -1,0 +1,46 @@
+version: "2.2"
+
+services:
+  
+  loadbalancer:
+    image: nginx:latest
+    container_name: lb-01
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      lb-network:
+        ipv4_address: 172.43.0.5
+  
+  webserver1:
+    image: nginx:latest
+    container_name: wb-01
+    volumes:
+      - ./pages/index1.html:/usr/share/nginx/html/index.html
+    networks:
+      lb-network:
+        ipv4_address: 172.43.0.2
+  
+  webserver2:
+    image: nginx:latest
+    container_name: wb-02
+    volumes:
+      - ./pages/index2.html:/usr/share/nginx/html/index.html
+    networks:
+      lb-network:
+        ipv4_address: 172.43.0.3
+  
+  webserver3:
+    image: nginx:latest
+    container_name: wb-03
+    volumes:
+      - ./pages/index3.html:/usr/share/nginx/html/index.html
+    networks:
+      lb-network:
+        ipv4_address: 172.43.0.4
+
+networks:
+  lb-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.43.0.0/16
