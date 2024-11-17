@@ -1,0 +1,18 @@
+# Usa la imagen oficial de NGINX como base
+FROM nginx:latest
+
+# Establece el directorio de trabajo
+WORKDIR /usr/share/nginx/html
+
+# Elimina los archivos por defecto de NGINX
+RUN rm -rf ./*
+
+# Copia los archivos locales de tu página al contenedor
+COPY webpage/index.html .
+COPY webpage/styles.css .
+
+# Expone el puerto 80 para el tráfico HTTP
+EXPOSE 80
+
+# Comando por defecto para iniciar NGINX
+CMD ["nginx", "-g", "daemon off;"]
