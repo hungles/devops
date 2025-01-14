@@ -1,0 +1,43 @@
+version: '3'
+
+volumes:
+  grafana-data:
+  loki-data:
+  promtail-data:
+
+services:
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    restart: unless-stopped
+    volumes:
+      - ./loki-config.yaml:/etc/loki/loki-config.yaml
+      - loki-data:/loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/loki-config.yaml
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    restart: unless-stopped
+    volumes:
+      - /root/:/root_user:ro
+      - /home:/home_server:ro
+      - /var/log:/var/log:ro
+      - ./promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - promtail-data:/tmp
+    command: -config.file=/etc/promtail/promtail-config.yaml
+
+  
+    
