@@ -1,0 +1,806 @@
+
+==> Audit <==
+|--------------|---------------------|----------|----------|---------|---------------------|---------------------|
+|   Command    |        Args         | Profile  |   User   | Version |     Start Time      |      End Time       |
+|--------------|---------------------|----------|----------|---------|---------------------|---------------------|
+| start        |                     | minikube | scarmona | v1.33.1 | 16 Aug 24 17:07 -05 | 16 Aug 24 17:08 -05 |
+| update-check |                     | minikube | scarmona | v1.33.1 | 16 Aug 24 18:19 -05 | 16 Aug 24 18:19 -05 |
+| start        |                     | minikube | scarmona | v1.33.1 | 19 Aug 24 16:15 -05 | 19 Aug 24 16:15 -05 |
+| addons       | enable ingress      | minikube | scarmona | v1.33.1 | 19 Aug 24 16:25 -05 | 19 Aug 24 16:26 -05 |
+| ip           |                     | minikube | scarmona | v1.33.1 | 19 Aug 24 16:32 -05 | 19 Aug 24 16:32 -05 |
+| ip           |                     | minikube | scarmona | v1.33.1 | 19 Aug 24 16:40 -05 | 19 Aug 24 16:40 -05 |
+| start        | --driver=docker     | minikube | scarmona | v1.33.1 | 10 Jan 25 00:24 -05 |                     |
+| delete       |                     | minikube | scarmona | v1.33.1 | 10 Jan 25 00:30 -05 | 10 Jan 25 00:30 -05 |
+| start        | --driver=docker     | minikube | scarmona | v1.33.1 | 10 Jan 25 00:31 -05 | 10 Jan 25 00:32 -05 |
+| update-check |                     | minikube | scarmona | v1.33.1 | 13 Jan 25 23:43 -05 | 13 Jan 25 23:43 -05 |
+| update-check |                     | minikube | scarmona | v1.33.1 | 13 Jan 25 23:43 -05 | 13 Jan 25 23:43 -05 |
+| start        | --driver=docker     | minikube | scarmona | v1.33.1 | 13 Jan 25 23:49 -05 | 13 Jan 25 23:50 -05 |
+| update-check |                     | minikube | scarmona | v1.33.1 | 14 Jan 25 00:05 -05 | 14 Jan 25 00:05 -05 |
+| ssh          |                     | minikube | scarmona | v1.33.1 | 14 Jan 25 21:57 -05 |                     |
+| delete       |                     | minikube | scarmona | v1.33.1 | 14 Jan 25 21:58 -05 | 14 Jan 25 21:58 -05 |
+| start        | --driver=virtualbox | minikube | scarmona | v1.33.1 | 14 Jan 25 21:58 -05 |                     |
+| start        | --driver=virtualbox | minikube | scarmona | v1.33.1 | 14 Jan 25 22:08 -05 |                     |
+| delete       |                     | minikube | scarmona | v1.33.1 | 14 Jan 25 22:15 -05 | 14 Jan 25 22:15 -05 |
+| start        | --driver=virtualbox | minikube | scarmona | v1.33.1 | 14 Jan 25 22:19 -05 |                     |
+| start        | --driver=virtualbox | minikube | scarmona | v1.33.1 | 14 Jan 25 22:21 -05 |                     |
+|--------------|---------------------|----------|----------|---------|---------------------|---------------------|
+
+
+==> Last Start <==
+Log file created at: 2025/01/14 22:21:53
+Running on machine: yachay-laptop
+Binary: Built with gc go1.22.1 for linux/amd64
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I0114 22:21:53.817271  111142 out.go:291] Setting OutFile to fd 1 ...
+I0114 22:21:53.817414  111142 out.go:343] isatty.IsTerminal(1) = true
+I0114 22:21:53.817419  111142 out.go:304] Setting ErrFile to fd 2...
+I0114 22:21:53.817425  111142 out.go:343] isatty.IsTerminal(2) = true
+I0114 22:21:53.817826  111142 root.go:338] Updating PATH: /home/scarmona/.minikube/bin
+I0114 22:21:53.818494  111142 out.go:298] Setting JSON to false
+I0114 22:21:53.821143  111142 start.go:129] hostinfo: {"hostname":"yachay-laptop","uptime":82308,"bootTime":1736829005,"procs":402,"os":"linux","platform":"debian","platformFamily":"debian","platformVersion":"bookworm/sid","kernelVersion":"6.5.0-35-generic","kernelArch":"x86_64","virtualizationSystem":"kvm","virtualizationRole":"host","hostId":"dda3851f-559d-4871-8962-bbd358dd8cb8"}
+I0114 22:21:53.821238  111142 start.go:139] virtualization: kvm host
+I0114 22:21:53.822800  111142 out.go:177] 😄  minikube v1.33.1 en Debian bookworm/sid
+I0114 22:21:53.824690  111142 notify.go:220] Checking for updates...
+I0114 22:21:53.825169  111142 config.go:182] Loaded profile config "minikube": Driver=virtualbox, ContainerRuntime=docker, KubernetesVersion=v1.30.0
+I0114 22:21:53.825771  111142 driver.go:392] Setting default libvirt URI to qemu:///system
+I0114 22:21:53.883374  111142 virtualbox.go:136] virtual box version: 7.1.0r164728
+I0114 22:21:53.884637  111142 out.go:177] ✨  Using the virtualbox driver based on existing profile
+I0114 22:21:53.886279  111142 start.go:297] selected driver: virtualbox
+I0114 22:21:53.886293  111142 start.go:901] validating driver "virtualbox" against &{Name:minikube KeepContext:false EmbedCerts:false MinikubeISO:https://storage.googleapis.com/minikube/iso/minikube-v1.33.1-amd64.iso KicBaseImage:gcr.io/k8s-minikube/kicbase:v0.0.44@sha256:eb04641328b06c5c4a14f4348470e1046bbcf9c2cbc551486e343d3a49db557e Memory:3400 CPUs:2 DiskSize:20000 Driver:virtualbox HyperkitVpnKitSock: HyperkitVSockPorts:[] DockerEnv:[] ContainerVolumeMounts:[] InsecureRegistry:[] RegistryMirror:[] HostOnlyCIDR:192.168.59.1/24 HypervVirtualSwitch: HypervUseExternalSwitch:false HypervExternalAdapter: KVMNetwork:default KVMQemuURI:qemu:///system KVMGPU:false KVMHidden:false KVMNUMACount:1 APIServerPort:8443 DockerOpt:[] DisableDriverMounts:false NFSShare:[] NFSSharesRoot:/nfsshares UUID: NoVTXCheck:false DNSProxy:false HostDNSResolver:true HostOnlyNicType:virtio NatNicType:virtio SSHIPAddress: SSHUser:root SSHKey: SSHPort:22 KubernetesConfig:{KubernetesVersion:v1.30.0 ClusterName:minikube Namespace:default APIServerHAVIP: APIServerName:minikubeCA APIServerNames:[] APIServerIPs:[] DNSDomain:cluster.local ContainerRuntime:docker CRISocket: NetworkPlugin:cni FeatureGates: ServiceCIDR:10.96.0.0/12 ImageRepository: LoadBalancerStartIP: LoadBalancerEndIP: CustomIngressCert: RegistryAliases: ExtraOptions:[] ShouldLoadCachedImages:true EnableDefaultCNI:false CNI:} Nodes:[{Name: IP: Port:8443 KubernetesVersion:v1.30.0 ContainerRuntime:docker ControlPlane:true Worker:true}] Addons:map[] CustomAddonImages:map[] CustomAddonRegistries:map[] VerifyComponents:map[apiserver:true system_pods:true] StartHostTimeout:6m0s ScheduledStop:<nil> ExposedPorts:[] ListenAddress: Network: Subnet: MultiNodeRequested:false ExtraDisks:0 CertExpiration:26280h0m0s Mount:false MountString:/home/scarmona:/minikube-host Mount9PVersion:9p2000.L MountGID:docker MountIP: MountMSize:262144 MountOptions:[] MountPort:0 MountType:9p MountUID:docker BinaryMirror: DisableOptimizations:false DisableMetrics:false CustomQemuFirmwarePath: SocketVMnetClientPath: SocketVMnetPath: StaticIP: SSHAuthSock: SSHAgentPID:0 GPUs: AutoPauseInterval:1m0s}
+I0114 22:21:53.886501  111142 start.go:912] status for virtualbox: {Installed:true Healthy:true Running:false NeedsImprovement:false Error:<nil> Reason: Fix: Doc: Version:7.1.0r164728
+}
+I0114 22:21:53.889472  111142 cni.go:84] Creating CNI manager for ""
+I0114 22:21:53.889494  111142 cni.go:158] "virtualbox" driver + "docker" container runtime found on kubernetes v1.24+, recommending bridge
+I0114 22:21:53.889598  111142 start.go:340] cluster config:
+{Name:minikube KeepContext:false EmbedCerts:false MinikubeISO:https://storage.googleapis.com/minikube/iso/minikube-v1.33.1-amd64.iso KicBaseImage:gcr.io/k8s-minikube/kicbase:v0.0.44@sha256:eb04641328b06c5c4a14f4348470e1046bbcf9c2cbc551486e343d3a49db557e Memory:3400 CPUs:2 DiskSize:20000 Driver:virtualbox HyperkitVpnKitSock: HyperkitVSockPorts:[] DockerEnv:[] ContainerVolumeMounts:[] InsecureRegistry:[] RegistryMirror:[] HostOnlyCIDR:192.168.59.1/24 HypervVirtualSwitch: HypervUseExternalSwitch:false HypervExternalAdapter: KVMNetwork:default KVMQemuURI:qemu:///system KVMGPU:false KVMHidden:false KVMNUMACount:1 APIServerPort:8443 DockerOpt:[] DisableDriverMounts:false NFSShare:[] NFSSharesRoot:/nfsshares UUID: NoVTXCheck:false DNSProxy:false HostDNSResolver:true HostOnlyNicType:virtio NatNicType:virtio SSHIPAddress: SSHUser:root SSHKey: SSHPort:22 KubernetesConfig:{KubernetesVersion:v1.30.0 ClusterName:minikube Namespace:default APIServerHAVIP: APIServerName:minikubeCA APIServerNames:[] APIServerIPs:[] DNSDomain:cluster.local ContainerRuntime:docker CRISocket: NetworkPlugin:cni FeatureGates: ServiceCIDR:10.96.0.0/12 ImageRepository: LoadBalancerStartIP: LoadBalancerEndIP: CustomIngressCert: RegistryAliases: ExtraOptions:[] ShouldLoadCachedImages:true EnableDefaultCNI:false CNI:} Nodes:[{Name: IP: Port:8443 KubernetesVersion:v1.30.0 ContainerRuntime:docker ControlPlane:true Worker:true}] Addons:map[] CustomAddonImages:map[] CustomAddonRegistries:map[] VerifyComponents:map[apiserver:true system_pods:true] StartHostTimeout:6m0s ScheduledStop:<nil> ExposedPorts:[] ListenAddress: Network: Subnet: MultiNodeRequested:false ExtraDisks:0 CertExpiration:26280h0m0s Mount:false MountString:/home/scarmona:/minikube-host Mount9PVersion:9p2000.L MountGID:docker MountIP: MountMSize:262144 MountOptions:[] MountPort:0 MountType:9p MountUID:docker BinaryMirror: DisableOptimizations:false DisableMetrics:false CustomQemuFirmwarePath: SocketVMnetClientPath: SocketVMnetPath: StaticIP: SSHAuthSock: SSHAgentPID:0 GPUs: AutoPauseInterval:1m0s}
+I0114 22:21:53.889761  111142 iso.go:125] acquiring lock: {Name:mk7ad963688bc33c5826a4c7693974fbeba99648 Clock:{} Delay:500ms Timeout:10m0s Cancel:<nil>}
+I0114 22:21:53.891037  111142 out.go:177] 👍  Starting "minikube" primary control-plane node in "minikube" cluster
+I0114 22:21:53.891942  111142 preload.go:132] Checking if preload exists for k8s version v1.30.0 and runtime docker
+I0114 22:21:53.891995  111142 preload.go:147] Found local preload: /home/scarmona/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.30.0-docker-overlay2-amd64.tar.lz4
+I0114 22:21:53.892004  111142 cache.go:56] Caching tarball of preloaded images
+I0114 22:21:53.892173  111142 preload.go:173] Found /home/scarmona/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.30.0-docker-overlay2-amd64.tar.lz4 in cache, skipping download
+I0114 22:21:53.892187  111142 cache.go:59] Finished verifying existence of preloaded tar for v1.30.0 on docker
+I0114 22:21:53.892416  111142 profile.go:143] Saving config to /home/scarmona/.minikube/profiles/minikube/config.json ...
+I0114 22:21:53.892839  111142 start.go:360] acquireMachinesLock for minikube: {Name:mka884ee78f13af9813b0b28a9dcd8aebe3adb87 Clock:{} Delay:500ms Timeout:13m0s Cancel:<nil>}
+I0114 22:21:53.892904  111142 start.go:364] duration metric: took 44.193µs to acquireMachinesLock for "minikube"
+I0114 22:21:53.892923  111142 start.go:96] Skipping create...Using existing machine configuration
+I0114 22:21:53.892930  111142 fix.go:54] fixHost starting: 
+I0114 22:21:53.893313  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+I0114 22:21:53.993808  111142 main.go:141] libmachine: STDOUT:
+{
+name="minikube"
+encryption="disabled"
+groups="/"
+platformArchitecture="x86"
+ostype="Other/Unknown"
+UUID="81f5a124-f1a6-46c3-a7d4-7b3204a8afdb"
+CfgFile="/home/scarmona/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/scarmona/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/scarmona/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="81f5a124-f1a6-46c3-a7d4-7b3204a8afdb"
+memory=128
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=1
+hpet="off"
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+hwvirtex="on"
+nestedpaging="on"
+largepages="off"
+vtxvpid="on"
+vtxux="on"
+virtvmsavevmload="on"
+cpuid-portability-level=0
+bootmenu="messageandmenu"
+boot1="floppy"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+NvramFile="/home/scarmona/.minikube/machines/minikube/minikube/minikube.nvram"
+rtcuseutc="off"
+iommu="none"
+paravirtprovider="default"
+effparavirtprovider="none"
+VMState="poweroff"
+VMStateChangeTime="2025-01-15T03:19:48.316000000"
+graphicscontroller="vboxvga"
+monitorcount=1
+accelerate3d="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+vmprocpriority="default"
+nic1="none"
+nic2="none"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="default"
+audio_out="off"
+audio_in="off"
+clipboard="disabled"
+clipboard_file_transfers="off"
+draganddrop="disabled"
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+recording_started="off"
+recording_enabled="off"
+recording_screens=1
+ rec_screen0
+rec_screen_enabled="on"
+rec_screen_id=0
+rec_screen_video_enabled="on"
+rec_screen_dest="File"
+rec_screen_dest_filename="/home/scarmona/.minikube/machines/minikube/minikube/minikube-screen0.webm"
+rec_screen_opts="vc_enabled=true,ac_enabled=false,ac_profile=med"
+rec_screen_video_res_xy="1024x768"
+rec_screen_video_rate_kbps=512
+rec_screen_video_fps=25
+GuestMemoryBalloon=0
+}
+I0114 22:21:53.993827  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:53.993904  111142 fix.go:112] recreateIfNeeded on minikube: state=Stopped err=<nil>
+W0114 22:21:53.993916  111142 fix.go:138] unexpected machine state, will restart: <nil>
+I0114 22:21:53.995218  111142 out.go:177] 🔄  Restarting existing virtualbox VM for "minikube" ...
+I0114 22:21:53.996066  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+I0114 22:21:54.081481  111142 main.go:141] libmachine: STDOUT:
+{
+name="minikube"
+encryption="disabled"
+groups="/"
+platformArchitecture="x86"
+ostype="Other/Unknown"
+UUID="81f5a124-f1a6-46c3-a7d4-7b3204a8afdb"
+CfgFile="/home/scarmona/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/scarmona/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/scarmona/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="81f5a124-f1a6-46c3-a7d4-7b3204a8afdb"
+memory=128
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=1
+hpet="off"
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+hwvirtex="on"
+nestedpaging="on"
+largepages="off"
+vtxvpid="on"
+vtxux="on"
+virtvmsavevmload="on"
+cpuid-portability-level=0
+bootmenu="messageandmenu"
+boot1="floppy"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+NvramFile="/home/scarmona/.minikube/machines/minikube/minikube/minikube.nvram"
+rtcuseutc="off"
+iommu="none"
+paravirtprovider="default"
+effparavirtprovider="none"
+VMState="poweroff"
+VMStateChangeTime="2025-01-15T03:19:48.316000000"
+graphicscontroller="vboxvga"
+monitorcount=1
+accelerate3d="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+vmprocpriority="default"
+nic1="none"
+nic2="none"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="default"
+audio_out="off"
+audio_in="off"
+clipboard="disabled"
+clipboard_file_transfers="off"
+draganddrop="disabled"
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+recording_started="off"
+recording_enabled="off"
+recording_screens=1
+ rec_screen0
+rec_screen_enabled="on"
+rec_screen_id=0
+rec_screen_video_enabled="on"
+rec_screen_dest="File"
+rec_screen_dest_filename="/home/scarmona/.minikube/machines/minikube/minikube/minikube-screen0.webm"
+rec_screen_opts="vc_enabled=true,ac_enabled=false,ac_profile=med"
+rec_screen_video_res_xy="1024x768"
+rec_screen_video_rate_kbps=512
+rec_screen_video_fps=25
+GuestMemoryBalloon=0
+}
+I0114 22:21:54.081499  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:54.081576  111142 main.go:141] libmachine: Check network to re-create if needed...
+I0114 22:21:54.081592  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage list hostonlyifs
+I0114 22:21:54.180317  111142 main.go:141] libmachine: STDOUT:
+{
+Name:            vboxnet0
+GUID:            f0000000-dae8-4abf-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.59.1
+NetworkMask:     255.255.255.0
+IPV6Address:     fe80::800:27ff:fe00:0
+IPV6NetworkMaskPrefixLength: 64
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+
+}
+I0114 22:21:54.180334  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:54.182978  111142 main.go:141] libmachine: Searching for hostonly interface for IPv4: 192.168.59.1 and Mask: ffffff00
+I0114 22:21:54.182992  111142 main.go:141] libmachine: Found: vboxnet0
+I0114 22:21:54.183007  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage list dhcpservers
+I0114 22:21:54.243119  111142 main.go:141] libmachine: STDOUT:
+{
+NetworkName:    HostInterfaceNetworking-vboxnet0
+Dhcpd IP:       192.168.59.8
+LowerIPAddress: 192.168.59.100
+UpperIPAddress: 192.168.59.254
+NetworkMask:    255.255.255.0
+Enabled:        Yes
+Global Configuration:
+    minLeaseTime:     default
+    defaultLeaseTime: default
+    maxLeaseTime:     default
+    Forced options:   None
+    Suppressed opts.: None
+        1/legacy: 255.255.255.0
+Groups:               None
+Individual Configs:   None
+}
+I0114 22:21:54.243153  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:54.243218  111142 main.go:141] libmachine: Removing orphan DHCP servers...
+I0114 22:21:54.243231  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage list hostonlyifs
+I0114 22:21:54.347559  111142 main.go:141] libmachine: STDOUT:
+{
+Name:            vboxnet0
+GUID:            f0000000-dae8-4abf-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.59.1
+NetworkMask:     255.255.255.0
+IPV6Address:     fe80::800:27ff:fe00:0
+IPV6NetworkMaskPrefixLength: 64
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+
+}
+I0114 22:21:54.347579  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:54.347690  111142 main.go:141] libmachine: Adding/Modifying DHCP server "192.168.59.14" with address range "192.168.59.100" - "192.168.59.254"...
+I0114 22:21:54.347706  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage list dhcpservers
+I0114 22:21:54.415625  111142 main.go:141] libmachine: STDOUT:
+{
+NetworkName:    HostInterfaceNetworking-vboxnet0
+Dhcpd IP:       192.168.59.8
+LowerIPAddress: 192.168.59.100
+UpperIPAddress: 192.168.59.254
+NetworkMask:    255.255.255.0
+Enabled:        Yes
+Global Configuration:
+    minLeaseTime:     default
+    defaultLeaseTime: default
+    maxLeaseTime:     default
+    Forced options:   None
+    Suppressed opts.: None
+        1/legacy: 255.255.255.0
+Groups:               None
+Individual Configs:   None
+}
+I0114 22:21:54.415644  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:54.415751  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage dhcpserver modify --netname HostInterfaceNetworking-vboxnet0 --ip 192.168.59.14 --netmask 255.255.255.0 --lowerip 192.168.59.100 --upperip 192.168.59.254 --enable
+I0114 22:21:54.487588  111142 main.go:141] libmachine: STDOUT:
+{
+}
+I0114 22:21:54.487602  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:54.487621  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage modifyvm minikube --nic2 hostonly --nictype2 virtio --nicpromisc2 deny --hostonlyadapter2 vboxnet0 --cableconnected2 on
+I0114 22:21:54.610316  111142 main.go:141] libmachine: STDOUT:
+{
+}
+I0114 22:21:54.610327  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:54.610574  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage modifyvm minikube --natpf1 delete ssh
+I0114 22:21:54.681572  111142 main.go:141] libmachine: STDOUT:
+{
+}
+I0114 22:21:54.681611  111142 main.go:141] libmachine: STDERR:
+{
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 848 of file VBoxManageModifyVM.cpp
+}
+I0114 22:21:54.681637  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage modifyvm minikube --natpf1 ssh,tcp,127.0.0.1,45319,,22
+I0114 22:21:54.752263  111142 main.go:141] libmachine: STDOUT:
+{
+}
+I0114 22:21:54.752289  111142 main.go:141] libmachine: STDERR:
+{
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 848 of file VBoxManageModifyVM.cpp
+}
+I0114 22:21:54.752356  111142 fix.go:56] duration metric: took 859.425616ms for fixHost
+I0114 22:21:54.752370  111142 start.go:83] releasing machines lock for "minikube", held for 859.457386ms
+W0114 22:21:54.752385  111142 start.go:713] error starting host: driver start: /usr/bin/VBoxManage modifyvm minikube --natpf1 ssh,tcp,127.0.0.1,45319,,22 failed:
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 848 of file VBoxManageModifyVM.cpp
+W0114 22:21:54.752461  111142 out.go:239] 🤦  StartHost failed, but will try again: driver start: /usr/bin/VBoxManage modifyvm minikube --natpf1 ssh,tcp,127.0.0.1,45319,,22 failed:
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 848 of file VBoxManageModifyVM.cpp
+
+I0114 22:21:54.752490  111142 start.go:728] Will try again in 5 seconds ...
+I0114 22:21:59.753541  111142 start.go:360] acquireMachinesLock for minikube: {Name:mka884ee78f13af9813b0b28a9dcd8aebe3adb87 Clock:{} Delay:500ms Timeout:13m0s Cancel:<nil>}
+I0114 22:21:59.753688  111142 start.go:364] duration metric: took 111.08µs to acquireMachinesLock for "minikube"
+I0114 22:21:59.753722  111142 start.go:96] Skipping create...Using existing machine configuration
+I0114 22:21:59.753731  111142 fix.go:54] fixHost starting: 
+I0114 22:21:59.754174  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+I0114 22:21:59.899698  111142 main.go:141] libmachine: STDOUT:
+{
+name="minikube"
+encryption="disabled"
+groups="/"
+platformArchitecture="x86"
+ostype="Other/Unknown"
+UUID="81f5a124-f1a6-46c3-a7d4-7b3204a8afdb"
+CfgFile="/home/scarmona/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/scarmona/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/scarmona/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="81f5a124-f1a6-46c3-a7d4-7b3204a8afdb"
+memory=128
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=1
+hpet="off"
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+hwvirtex="on"
+nestedpaging="on"
+largepages="off"
+vtxvpid="on"
+vtxux="on"
+virtvmsavevmload="on"
+cpuid-portability-level=0
+bootmenu="messageandmenu"
+boot1="floppy"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+NvramFile="/home/scarmona/.minikube/machines/minikube/minikube/minikube.nvram"
+rtcuseutc="off"
+iommu="none"
+paravirtprovider="default"
+effparavirtprovider="none"
+VMState="poweroff"
+VMStateChangeTime="2025-01-15T03:19:48.316000000"
+graphicscontroller="vboxvga"
+monitorcount=1
+accelerate3d="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+vmprocpriority="default"
+nic1="none"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800275C8E99"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="default"
+audio_out="off"
+audio_in="off"
+clipboard="disabled"
+clipboard_file_transfers="off"
+draganddrop="disabled"
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+recording_started="off"
+recording_enabled="off"
+recording_screens=1
+ rec_screen0
+rec_screen_enabled="on"
+rec_screen_id=0
+rec_screen_video_enabled="on"
+rec_screen_dest="File"
+rec_screen_dest_filename="/home/scarmona/.minikube/machines/minikube/minikube/minikube-screen0.webm"
+rec_screen_opts="vc_enabled=true,ac_enabled=false,ac_profile=med"
+rec_screen_video_res_xy="1024x768"
+rec_screen_video_rate_kbps=512
+rec_screen_video_fps=25
+GuestMemoryBalloon=0
+}
+I0114 22:21:59.899723  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:59.899812  111142 fix.go:112] recreateIfNeeded on minikube: state=Stopped err=<nil>
+W0114 22:21:59.899824  111142 fix.go:138] unexpected machine state, will restart: <nil>
+I0114 22:21:59.901800  111142 out.go:177] 🔄  Restarting existing virtualbox VM for "minikube" ...
+I0114 22:21:59.902707  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage showvminfo minikube --machinereadable
+I0114 22:21:59.998447  111142 main.go:141] libmachine: STDOUT:
+{
+name="minikube"
+encryption="disabled"
+groups="/"
+platformArchitecture="x86"
+ostype="Other/Unknown"
+UUID="81f5a124-f1a6-46c3-a7d4-7b3204a8afdb"
+CfgFile="/home/scarmona/.minikube/machines/minikube/minikube/minikube.vbox"
+SnapFldr="/home/scarmona/.minikube/machines/minikube/minikube/Snapshots"
+LogFldr="/home/scarmona/.minikube/machines/minikube/minikube/Logs"
+hardwareuuid="81f5a124-f1a6-46c3-a7d4-7b3204a8afdb"
+memory=128
+pagefusion="off"
+vram=8
+cpuexecutioncap=100
+cpu-profile="host"
+chipset="piix3"
+firmware="BIOS"
+cpus=1
+hpet="off"
+pae="on"
+longmode="on"
+triplefaultreset="off"
+apic="on"
+x2apic="off"
+nested-hw-virt="off"
+hwvirtex="on"
+nestedpaging="on"
+largepages="off"
+vtxvpid="on"
+vtxux="on"
+virtvmsavevmload="on"
+cpuid-portability-level=0
+bootmenu="messageandmenu"
+boot1="floppy"
+boot2="dvd"
+boot3="disk"
+boot4="none"
+acpi="on"
+ioapic="on"
+biosapic="apic"
+biossystemtimeoffset=0
+NvramFile="/home/scarmona/.minikube/machines/minikube/minikube/minikube.nvram"
+rtcuseutc="off"
+iommu="none"
+paravirtprovider="default"
+effparavirtprovider="none"
+VMState="poweroff"
+VMStateChangeTime="2025-01-15T03:19:48.316000000"
+graphicscontroller="vboxvga"
+monitorcount=1
+accelerate3d="off"
+teleporterenabled="off"
+teleporterport=0
+teleporteraddress=""
+teleporterpassword=""
+tracing-enabled="off"
+tracing-allow-vm-access="off"
+tracing-config=""
+autostart-enabled="off"
+autostart-delay=0
+defaultfrontend=""
+vmprocpriority="default"
+nic1="none"
+hostonlyadapter2="vboxnet0"
+macaddress2="0800275C8E99"
+cableconnected2="on"
+nic2="hostonly"
+nictype2="virtio"
+nicspeed2="0"
+nic3="none"
+nic4="none"
+nic5="none"
+nic6="none"
+nic7="none"
+nic8="none"
+hidpointing="ps2mouse"
+hidkeyboard="ps2kbd"
+uart1="off"
+uart2="off"
+uart3="off"
+uart4="off"
+lpt1="off"
+lpt2="off"
+audio="default"
+audio_out="off"
+audio_in="off"
+clipboard="disabled"
+clipboard_file_transfers="off"
+draganddrop="disabled"
+vrde="off"
+usb="off"
+ehci="off"
+xhci="off"
+recording_started="off"
+recording_enabled="off"
+recording_screens=1
+ rec_screen0
+rec_screen_enabled="on"
+rec_screen_id=0
+rec_screen_video_enabled="on"
+rec_screen_dest="File"
+rec_screen_dest_filename="/home/scarmona/.minikube/machines/minikube/minikube/minikube-screen0.webm"
+rec_screen_opts="vc_enabled=true,ac_enabled=false,ac_profile=med"
+rec_screen_video_res_xy="1024x768"
+rec_screen_video_rate_kbps=512
+rec_screen_video_fps=25
+GuestMemoryBalloon=0
+}
+I0114 22:21:59.998486  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:21:59.998574  111142 main.go:141] libmachine: Check network to re-create if needed...
+I0114 22:21:59.998597  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage list hostonlyifs
+I0114 22:22:00.103232  111142 main.go:141] libmachine: STDOUT:
+{
+Name:            vboxnet0
+GUID:            f0000000-dae8-4abf-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.59.1
+NetworkMask:     255.255.255.0
+IPV6Address:     fe80::800:27ff:fe00:0
+IPV6NetworkMaskPrefixLength: 64
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+
+}
+I0114 22:22:00.103252  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:22:00.105703  111142 main.go:141] libmachine: Searching for hostonly interface for IPv4: 192.168.59.1 and Mask: ffffff00
+I0114 22:22:00.105718  111142 main.go:141] libmachine: Found: vboxnet0
+I0114 22:22:00.105731  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage list dhcpservers
+I0114 22:22:00.194914  111142 main.go:141] libmachine: STDOUT:
+{
+NetworkName:    HostInterfaceNetworking-vboxnet0
+Dhcpd IP:       192.168.59.14
+LowerIPAddress: 192.168.59.100
+UpperIPAddress: 192.168.59.254
+NetworkMask:    255.255.255.0
+Enabled:        Yes
+Global Configuration:
+    minLeaseTime:     default
+    defaultLeaseTime: default
+    maxLeaseTime:     default
+    Forced options:   None
+    Suppressed opts.: None
+        1/legacy: 255.255.255.0
+Groups:               None
+Individual Configs:   None
+}
+I0114 22:22:00.194949  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:22:00.195030  111142 main.go:141] libmachine: Removing orphan DHCP servers...
+I0114 22:22:00.195046  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage list hostonlyifs
+I0114 22:22:00.306541  111142 main.go:141] libmachine: STDOUT:
+{
+Name:            vboxnet0
+GUID:            f0000000-dae8-4abf-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.59.1
+NetworkMask:     255.255.255.0
+IPV6Address:     fe80::800:27ff:fe00:0
+IPV6NetworkMaskPrefixLength: 64
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Wireless:        No
+Status:          Up
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+
+}
+I0114 22:22:00.306554  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:22:00.306642  111142 main.go:141] libmachine: Adding/Modifying DHCP server "192.168.59.17" with address range "192.168.59.100" - "192.168.59.254"...
+I0114 22:22:00.306658  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage list dhcpservers
+I0114 22:22:00.387277  111142 main.go:141] libmachine: STDOUT:
+{
+NetworkName:    HostInterfaceNetworking-vboxnet0
+Dhcpd IP:       192.168.59.14
+LowerIPAddress: 192.168.59.100
+UpperIPAddress: 192.168.59.254
+NetworkMask:    255.255.255.0
+Enabled:        Yes
+Global Configuration:
+    minLeaseTime:     default
+    defaultLeaseTime: default
+    maxLeaseTime:     default
+    Forced options:   None
+    Suppressed opts.: None
+        1/legacy: 255.255.255.0
+Groups:               None
+Individual Configs:   None
+}
+I0114 22:22:00.387293  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:22:00.387442  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage dhcpserver modify --netname HostInterfaceNetworking-vboxnet0 --ip 192.168.59.17 --netmask 255.255.255.0 --lowerip 192.168.59.100 --upperip 192.168.59.254 --enable
+I0114 22:22:00.489782  111142 main.go:141] libmachine: STDOUT:
+{
+}
+I0114 22:22:00.489799  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:22:00.489835  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage modifyvm minikube --nic2 hostonly --nictype2 virtio --nicpromisc2 deny --hostonlyadapter2 vboxnet0 --cableconnected2 on
+I0114 22:22:00.612113  111142 main.go:141] libmachine: STDOUT:
+{
+}
+I0114 22:22:00.612126  111142 main.go:141] libmachine: STDERR:
+{
+}
+I0114 22:22:00.612231  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage modifyvm minikube --natpf1 delete ssh
+I0114 22:22:00.680080  111142 main.go:141] libmachine: STDOUT:
+{
+}
+I0114 22:22:00.680116  111142 main.go:141] libmachine: STDERR:
+{
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 848 of file VBoxManageModifyVM.cpp
+}
+I0114 22:22:00.680150  111142 main.go:141] libmachine: COMMAND: /usr/bin/VBoxManage modifyvm minikube --natpf1 ssh,tcp,127.0.0.1,39173,,22
+I0114 22:22:00.752669  111142 main.go:141] libmachine: STDOUT:
+{
+}
+I0114 22:22:00.752695  111142 main.go:141] libmachine: STDERR:
+{
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 848 of file VBoxManageModifyVM.cpp
+}
+I0114 22:22:00.752735  111142 fix.go:56] duration metric: took 999.004434ms for fixHost
+I0114 22:22:00.752746  111142 start.go:83] releasing machines lock for "minikube", held for 999.045972ms
+W0114 22:22:00.752847  111142 out.go:239] 😿  Failed to start virtualbox VM. Running "minikube delete" may fix it: driver start: /usr/bin/VBoxManage modifyvm minikube --natpf1 ssh,tcp,127.0.0.1,39173,,22 failed:
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 848 of file VBoxManageModifyVM.cpp
+
+I0114 22:22:00.754795  111142 out.go:177] 
+W0114 22:22:00.755732  111142 out.go:239] ❌  Saliendo por un error GUEST_PROVISION: error provisioning guest: Failed to start host: driver start: /usr/bin/VBoxManage modifyvm minikube --natpf1 ssh,tcp,127.0.0.1,39173,,22 failed:
+VBoxManage: error: The machine 'minikube' is already locked for a session (or being unlocked)
+VBoxManage: error: Details: code VBOX_E_INVALID_OBJECT_STATE (0x80bb0007), component MachineWrap, interface IMachine, callee nsISupports
+VBoxManage: error: Context: "LockMachine(a->session, LockType_Write)" at line 848 of file VBoxManageModifyVM.cpp
+
+W0114 22:22:00.755765  111142 out.go:239] 
+W0114 22:22:00.757106  111142 out.go:239] [31m╭───────────────────────────────────────────────────────────────────────────────────────────╮[0m
+[31m│[0m                                                                                           [31m│[0m
+[31m│[0m    😿  If the above advice does not help, please let us know:                             [31m│[0m
+[31m│[0m    👉  https://github.com/kubernetes/minikube/issues/new/choose                           [31m│[0m
+[31m│[0m                                                                                           [31m│[0m
+[31m│[0m    Please run `minikube logs --file=logs.txt` and attach logs.txt to the GitHub issue.    [31m│[0m
+[31m│[0m                                                                                           [31m│[0m
+[31m╰───────────────────────────────────────────────────────────────────────────────────────────╯[0m
+I0114 22:22:00.758121  111142 out.go:177] 
+
+
