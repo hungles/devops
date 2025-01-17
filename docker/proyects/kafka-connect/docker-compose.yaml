@@ -39,8 +39,18 @@ services:
       CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.storage.StringConverter
       CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      CONNECT_PLUGIN_PATH: /usr/share/java
+      CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components
+    command:
+      - bash
+      - -c
+      - |
+        confluent-hub install --no-prompt confluentinc/kafka-connect-http-source:latest
+        /etc/confluent/docker/run
     ports:
       - "8083:8083"
-    volumes:
-      - ./confluentinc-kafka-connect-http-1.7.8:/usr/share/java
+
+  api-testing:
+    image: api-test:latest
+    container_name: api-rest
+    ports:
+      - "8000:8000"

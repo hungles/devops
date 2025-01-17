@@ -1,0 +1,8 @@
+#Crear una VM
+az vm create \
+  --resource-group "insertar_grupo_de_seguridad" \
+  --name my-vm \
+  --public-ip-sku Standard \
+  --image Ubuntu2204 \
+  --admin-username azureuser \
+  --generate-ssh-keys
