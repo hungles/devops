@@ -6,26 +6,30 @@ services:
     environment:
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_NODE_ID: 1
-      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER_PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,BROKER_PLAINTEXT://:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.59.0.2:9092,BROKER_PLAINTEXT://172.59.0.2:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,BROKER_PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
       KAFKA_LOG_DIRS: /var/lib/kafka/data
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-      CLUSTER_ID: "oIxtA2VfTc-S-1X0AuoRbA"
-      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
     ports:
       - "9092:9092"
+    networks:
+      custom_bridge_network:
+        ipv4_address: 172.59.0.2
 
-  connect:
+  http-connector:
     image: confluentinc/cp-kafka-connect:7.5.0
-    container_name: kafka-connect
+    container_name: kafka-http-connector
     depends_on:
       - kafka
     environment:
-      CONNECT_BOOTSTRAP_SERVERS: kafka:9092
+      CONNECT_BOOTSTRAP_SERVERS: 172.59.0.2:9092
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: connect-cluster
       CONNECT_CONFIG_STORAGE_TOPIC: connect-configs
@@ -48,9 +52,50 @@ services:
         /etc/confluent/docker/run
     ports:
       - "8083:8083"
-
-  api-testing:
-    image: api-test:latest
-    container_name: api-rest
+    networks:
+      custom_bridge_network:
+        ipv4_address: 172.59.0.3
+  
+  wanguard-rest:
+    image: wanguard-rest
+    container_name: wanguard_rest
     ports:
-      - "8000:8000"
+      - 8000:8000
+    networks:
+      custom_bridge_network:
+        ipv4_address: 172.59.0.4
+
+  rsyslog-server:
+    image: ubuntu:latest
+    container_name: rsyslog-server
+    tty: true
+    ports:
+      - "514:514"
+    networks:
+      custom_bridge_network:
+        ipv4_address: 172.59.0.5
+
+  simple-rest:
+    image: simple-rest:latest
+    container_name: simple-rest
+    ports:
+      - 8100:8000
+    networks:
+      custom_bridge_network:
+        ipv4_address: 172.59.0.6
+
+  json-rest:
+    image: json-rest:latest
+    container_name: json-rest
+    ports:
+      - 8200:8000
+    networks:
+      custom_bridge_network:
+        ipv4_address: 172.59.0.7
+
+networks:
+  custom_bridge_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.59.0.0/16

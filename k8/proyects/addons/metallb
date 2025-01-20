@@ -1,0 +1,2 @@
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
+kubectl create configmap config --from-literal=config=none -n metallb-system

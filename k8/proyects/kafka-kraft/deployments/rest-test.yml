@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-test
+  labels:
+    app: rest-test
+    instance: rest-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest-test
+      instance: rest-test
+  template:
+    metadata:
+      labels:
+        app: rest-test
+        instance: rest-test
+    spec:
+      containers:
+      - name: rest-test
+        image: scarmona04/json-rest:dev
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-test-service
+spec:
+  selector:
+    app: rest-test
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
