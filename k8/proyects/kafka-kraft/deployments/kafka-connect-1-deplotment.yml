@@ -6,7 +6,7 @@ metadata:
   labels:
     app: kafka-http-connector
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: kafka-http-connector
@@ -22,7 +22,7 @@ spec:
         - containerPort: 8083
         env:
         - name: CONNECT_BOOTSTRAP_SERVERS
-          value: "kafka-1:9092"
+          value: "kafka-3:9092"
         - name: CONNECT_REST_PORT
           value: "8083"
         - name: CONNECT_GROUP_ID
