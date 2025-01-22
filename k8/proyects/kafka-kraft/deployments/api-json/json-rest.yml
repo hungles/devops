@@ -1,0 +1,83 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-test
+  labels:
+    app: rest-test
+    instance: rest-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest-test
+      instance: rest-test
+  template:
+    metadata:
+      labels:
+        app: rest-test
+        instance: rest-test
+    spec:
+      containers:
+      - name: rest-test
+        image: scarmona04/json-rest:dev
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-test-service
+spec:
+  selector:
+    app: rest-test
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: push-syslog-json
+  labels:
+    app: push-syslog-json
+    instance: push-syslog-json
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: push-syslog-json
+      instance: push-syslog-json
+  template:
+    metadata:
+      labels:
+        app: push-syslog-json
+        instance: push-syslog-json
+    spec:
+      containers:
+      - name: push-syslog-json
+        image: push-json-rsyslog:dev
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: push-rest-service
+spec:
+  selector:
+    app: push-syslog-json
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000

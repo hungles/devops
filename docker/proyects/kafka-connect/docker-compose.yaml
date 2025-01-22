@@ -55,37 +55,9 @@ services:
     networks:
       custom_bridge_network:
         ipv4_address: 172.59.0.3
-  
-  wanguard-rest:
-    image: wanguard-rest
-    container_name: wanguard_rest
-    ports:
-      - 8000:8000
-    networks:
-      custom_bridge_network:
-        ipv4_address: 172.59.0.4
-
-  rsyslog-server:
-    image: ubuntu:latest
-    container_name: rsyslog-server
-    tty: true
-    ports:
-      - "514:514"
-    networks:
-      custom_bridge_network:
-        ipv4_address: 172.59.0.5
-
-  simple-rest:
-    image: simple-rest:latest
-    container_name: simple-rest
-    ports:
-      - 8100:8000
-    networks:
-      custom_bridge_network:
-        ipv4_address: 172.59.0.6
 
   json-rest:
-    image: json-rest:latest
+    image: scarmona04/json-rest:dev
     container_name: json-rest
     ports:
       - 8200:8000

@@ -21,6 +21,10 @@ spec:
       containers:
       - name: controller-kafka-1
         image: confluentinc/cp-kafka:7.5.0
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
         ports:
         - containerPort: 9092
         - containerPort: 9093
@@ -88,6 +92,10 @@ spec:
       containers:
       - name: controller-kafka-2
         image: confluentinc/cp-kafka:7.5.0
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
         ports:
         - containerPort: 9092
         - containerPort: 9093
@@ -155,6 +163,10 @@ spec:
       containers:
       - name: broker-kafka-1
         image: confluentinc/cp-kafka:7.5.0
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
         ports:
         - containerPort: 9092
         - containerPort: 9093

@@ -1,0 +1,16 @@
+FROM python:3.13.1 AS ms-wanguard
+
+# Crear el directorio de trabajo
+WORKDIR /app
+
+# Copiar los archivos de la aplicación
+COPY app/ /app/app
+
+COPY environ-file /app/.env
+
+# Instalar dependencias
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Comando para iniciar la aplicación FastAPI
+CMD ["python", "app/main.py"]
