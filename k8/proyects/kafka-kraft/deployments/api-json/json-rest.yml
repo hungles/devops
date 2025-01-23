@@ -2,24 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rest-test
+  name: jsontest-dev-api-01
   labels:
-    app: rest-test
-    instance: rest-test
+    app: jsontest-dev-api-01
+    instance: jsontest-dev-api-01
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rest-test
-      instance: rest-test
+      app: jsontest-dev-api-01
+      instance: jsontest-dev-api-01
   template:
     metadata:
       labels:
-        app: rest-test
-        instance: rest-test
+        app: jsontest-dev-api-01
+        instance: jsontest-dev-api-01
     spec:
       containers:
-      - name: rest-test
+      - name: jsontest-dev-api-01
         image: scarmona04/json-rest:dev
         ports:
         - containerPort: 8000
@@ -31,53 +31,53 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rest-test-service
+  name: jsontestapi-dev-svc-01
 spec:
   selector:
-    app: rest-test
+    app: jsontest-dev-api-01
   ports:
     - protocol: TCP
       port: 8000
       targetPort: 8000
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: push-syslog-json
-  labels:
-    app: push-syslog-json
-    instance: push-syslog-json
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: push-syslog-json
-      instance: push-syslog-json
-  template:
-    metadata:
-      labels:
-        app: push-syslog-json
-        instance: push-syslog-json
-    spec:
-      containers:
-      - name: push-syslog-json
-        image: push-json-rsyslog:dev
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 8000
-        resources:
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: push-rest-service
-spec:
-  selector:
-    app: push-syslog-json
-  ports:
-    - protocol: TCP
-      port: 8000
-      targetPort: 8000
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: push-syslog-json
+#   labels:
+#     app: push-syslog-json
+#     instance: push-syslog-json
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: push-syslog-json
+#       instance: push-syslog-json
+#   template:
+#     metadata:
+#       labels:
+#         app: push-syslog-json
+#         instance: push-syslog-json
+#     spec:
+#       containers:
+#       - name: push-syslog-json
+#         image: push-json-rsyslog:dev
+#         imagePullPolicy: Never
+#         ports:
+#         - containerPort: 8000
+#         resources:
+#           limits:
+#             memory: "1024Mi"
+#             cpu: "500m"
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: push-rest-service
+# spec:
+#   selector:
+#     app: push-syslog-json
+#   ports:
+#     - protocol: TCP
+#       port: 8000
+#       targetPort: 8000

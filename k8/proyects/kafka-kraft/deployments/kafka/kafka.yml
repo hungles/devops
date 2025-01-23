@@ -2,24 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kafka-controller-1
+  name: kafka-dev-controller-01
   labels:
-    app: kafka-controller-1
-    instance: kafka-controller-1
+    app: kafka-dev-controller-01
+    instance: kafka-dev-controller-01
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kafka-controller-1
-      instance: kafka-controller-1
+      app: kafka-dev-controller-01
+      instance: kafka-dev-controller-01
   template:
     metadata:
       labels:
-        app: kafka-controller-1
-        instance: kafka-controller-1
+        app: kafka-dev-controller-01
+        instance: kafka-dev-controller-01
     spec:
       containers:
-      - name: controller-kafka-1
+      - name: kafka-dev-controller-01
         image: confluentinc/cp-kafka:7.5.0
         resources:
           limits:
@@ -42,7 +42,7 @@ spec:
         - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
           value: CONTROLLER:PLAINTEXT,BROKER_PLAINTEXT:PLAINTEXT
         - name: KAFKA_CONTROLLER_QUORUM_VOTERS
-          value: 1@kafka-1:9093,2@kafka-2:9093
+          value: 1@kafka-dev-svc-01:9093,2@kafka-dev-svc-02:9093
         - name: KAFKA_LOG_DIRS
           value: /var/lib/kafka/data
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
@@ -57,11 +57,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafka-1
+  name: kafka-dev-svc-01
 spec:
   selector:
-    app: kafka-controller-1
-    instance: kafka-controller-1
+    app: kafka-dev-controller-01
+    instance: kafka-dev-controller-01
   ports:
   - name: broker
     port: 9092
@@ -73,24 +73,24 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kafka-controller-2
+  name: kafka-dev-controller-02
   labels:
-    app: kafka-controller-2
-    instance: kafka-controller-2
+    app: kafka-dev-controller-02
+    instance: kafka-dev-controller-02
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kafka-controller-2
-      instance: kafka-controller-2
+      app: kafka-dev-controller-02
+      instance: kafka-dev-controller-02
   template:
     metadata:
       labels:
-        app: kafka-controller-2
-        instance: kafka-controller-2
+        app: kafka-dev-controller-02
+        instance: kafka-dev-controller-02
     spec:
       containers:
-      - name: controller-kafka-2
+      - name: kafka-dev-controller-02
         image: confluentinc/cp-kafka:7.5.0
         resources:
           limits:
@@ -113,7 +113,7 @@ spec:
         - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
           value: CONTROLLER:PLAINTEXT,BROKER_PLAINTEXT:PLAINTEXT
         - name: KAFKA_CONTROLLER_QUORUM_VOTERS
-          value: 1@kafka-1:9093,2@kafka-2:9093
+          value: 1@kafka-dev-svc-01:9093,2@kafka-dev-svc-02:9093
         - name: KAFKA_LOG_DIRS
           value: /var/lib/kafka/data
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
@@ -128,11 +128,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafka-2
+  name: kafka-dev-svc-02
 spec:
   selector:
-    app: kafka-controller-2
-    instance: kafka-controller-2
+    app: kafka-dev-controller-02
+    instance: kafka-dev-controller-02
   ports:
   - name: broker
     port: 9092
@@ -144,24 +144,24 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kafka-brokers-1
+  name: kafka-dev-broker-01
   labels:
-    app: kafka-brokers-1
-    instance: kafka-brokers-1
+    app: kafka-dev-broker-01
+    instance: kafka-dev-broker-01
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kafka-brokers-1
-      instance: kafka-brokers-1
+      app: kafka-dev-broker-01
+      instance: kafka-dev-broker-01
   template:
     metadata:
       labels:
-        app: kafka-brokers-1
-        instance: kafka-brokers-1
+        app: kafka-dev-broker-01
+        instance: kafka-dev-broker-01
     spec:
       containers:
-      - name: broker-kafka-1
+      - name: kafka-dev-broker-01
         image: confluentinc/cp-kafka:7.5.0
         resources:
           limits:
@@ -180,11 +180,11 @@ spec:
         - name: KAFKA_CONTROLLER_LISTENER_NAMES
           value: CONTROLLER
         - name: KAFKA_ADVERTISED_LISTENERS
-          value: PLAINTEXT://kafka-3:9092
+          value: PLAINTEXT://kafka-dev-svc-03:9092
         - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
           value: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
         - name: KAFKA_CONTROLLER_QUORUM_VOTERS
-          value: 1@kafka-1:9093,2@kafka-2:9093
+          value: 1@kafka-dev-svc-01:9093,2@kafka-dev-svc-02:9093
         - name: KAFKA_LOG_DIRS
           value: /var/lib/kafka/data
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
@@ -199,11 +199,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafka-3
+  name: kafka-dev-svc-03
 spec:
   selector:
-    app: kafka-brokers-1
-    instance: kafka-brokers-1
+    app: kafka-dev-broker-01
+    instance: kafka-dev-broker-01
   ports:
   - name: broker
     port: 9092

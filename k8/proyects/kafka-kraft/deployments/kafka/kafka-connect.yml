@@ -2,31 +2,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kafka-http-connector
+  name: kconnect-dev-http-01
   labels:
-    app: kafka-http-connector
+    app: kconnect-dev-http-01
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kafka-http-connector
+      app: kconnect-dev-http-01
   template:
     metadata:
       labels:
-        app: kafka-http-connector
+        app: kconnect-dev-http-01
     spec:
       containers:
-      - name: kafka-http-connector
+      - name: kconnect-dev-http-01
         image: confluentinc/cp-kafka-connect:7.5.0
         resources:
           limits:
-            memory: "1024Mi"
-            cpu: "500m"
+            memory: "1500Mi"
+            cpu: "1000m"
         ports:
         - containerPort: 8083
         env:
         - name: CONNECT_BOOTSTRAP_SERVERS
-          value: "kafka-3:9092"
+          value: "kafka-dev-svc-03:9092"
         - name: CONNECT_REST_PORT
           value: "8083"
         - name: CONNECT_GROUP_ID
@@ -38,7 +38,7 @@ spec:
         - name: CONNECT_STATUS_STORAGE_TOPIC
           value: "connect-status"
         - name: CONNECT_REST_ADVERTISED_HOST_NAME
-          value: "kafka-http-connect-service"
+          value: "kconnect-dev-http-01"
         - name: CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR
           value: "1"
         - name: CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR
@@ -65,10 +65,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafka-http-connect-service
+  name: kconnect-dev-svc-01
 spec:
   selector:
-    app: kafka-http-connector
+    app: kconnect-dev-http-01
   ports:
   - name: rest
     port: 8083
@@ -77,18 +77,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: create-instances
+  name: create-connectors-http
 spec:
   selector:
     matchLabels:
-      app: create-instances
+      app: create-connectors-http
   template:
     metadata:
       labels:
-        app: create-instances
+        app: create-connectors-http
     spec:
       containers:
-      - name: connect-creator
+      - name: create-connectors-http
         image: nginx:latest
         resources:
           limits:
@@ -99,23 +99,29 @@ spec:
         - -c
         - |
           #Espera a que Kafka Connect esté listo
-            while ! curl -s kafka-http-connect-service:8083/connectors; do
-              echo "Esperando a Kafka Connect..."
-              sleep 5
+            while true; do
+              #Verifica si esta disponible el conector de HttpSource
+              if curl -s http://kconnect-dev-svc-01:8083/connector-plugins | grep -q "io.confluent.connect.http.HttpSourceConnector"; then
+                echo "El conector esta disponible para su uso"
+                break
+              else
+                echo "El conector todavia no esta disponible"
+              fi
+              sleep 10
             done
             #Crear el conector HTTP
-            curl -i -X POST -H "Accept: application/json" -H "Content-Type: application/json" http://kafka-http-connect-service:8083/connectors/ -d '{
+            curl -i -X POST -H "Accept: application/json" -H "Content-Type: application/json" http://kconnect-dev-svc-01:8083/connectors/ -d '{
               "name": "json-anomalies",
               "config": {
                 "connector.class": "io.confluent.connect.http.HttpSourceConnector",
                 "topic.name.pattern": "json-api",
-                "url": "http://rest-test-service:8000/proxy",
+                "url": "http://jsontestapi-dev-svc-01:8000/proxy",
                 "tasks.max": "1",
                 "http.offset.mode": "SIMPLE_INCREMENTING",
                 "http.initial.offset": "1",
                 "key.converter": "org.apache.kafka.connect.json.JsonConverter",
                 "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-                "confluent.topic.bootstrap.servers": "kafka-3:9092",
+                "confluent.topic.bootstrap.servers": "kafka-dev-svc-03:9092",
                 "confluent.license": "",
                 "confluent.topic.replication.factor": "1"
               }
