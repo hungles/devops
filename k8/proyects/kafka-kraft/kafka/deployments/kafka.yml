@@ -18,6 +18,10 @@ spec:
         app: kafka-dev-controller-01
         instance: kafka-dev-controller-01
     spec:
+      volumes:
+      - name: logs-dir-kafka
+        persistentVolumeClaim:
+          claimName: pvc-kafka-volume
       containers:
       - name: kafka-dev-controller-01
         image: confluentinc/cp-kafka:7.5.0
@@ -28,6 +32,9 @@ spec:
         ports:
         - containerPort: 9092
         - containerPort: 9093
+        volumeMounts:
+        - mountPath: "/var/lib/kafka/data"
+          name: logs-dir-kafka
         env:
         - name: KAFKA_PROCESS_ROLES
           value: controller
@@ -53,22 +60,6 @@ spec:
           value: "true"
         - name: CLUSTER_ID
           value: MkU3OEVBNTcwNTJENDM2Qk
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: kafka-dev-svc-01
-spec:
-  selector:
-    app: kafka-dev-controller-01
-    instance: kafka-dev-controller-01
-  ports:
-  - name: broker
-    port: 9092
-    targetPort: 9092
-  - name: controller
-    port: 9093
-    targetPort: 9093
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -125,22 +116,6 @@ spec:
         - name: CLUSTER_ID
           value: MkU3OEVBNTcwNTJENDM2Qk
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: kafka-dev-svc-02
-spec:
-  selector:
-    app: kafka-dev-controller-02
-    instance: kafka-dev-controller-02
-  ports:
-  - name: broker
-    port: 9092
-    targetPort: 9092
-  - name: controller
-    port: 9093
-    targetPort: 9093
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -196,18 +171,3 @@ spec:
         - name: CLUSTER_ID
           value: MkU3OEVBNTcwNTJENDM2Qk
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: kafka-dev-svc-03
-spec:
-  selector:
-    app: kafka-dev-broker-01
-    instance: kafka-dev-broker-01
-  ports:
-  - name: broker
-    port: 9092
-    targetPort: 9092
-  - name: controller
-    port: 9093
-    targetPort: 9093
