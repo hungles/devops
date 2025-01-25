@@ -4,15 +4,16 @@ kind: PersistentVolume
 metadata:
   name: kafka-volume
   labels:
-    type: fast-storage
+    type: kafka-storage
 spec:
   capacity:
     storage: 30Gi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: ""  # Asegúrate de no usar una StorageClass
   hostPath:
-    path: /mnt/data
+    path: /volumes
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -21,9 +22,10 @@ metadata:
 spec:
   selector:
     matchLabels:
-      type: kafka-volume
+      type: kafka-storage
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 30Gi
+  storageClassName: ""  # Deshabilita el uso de StorageClass

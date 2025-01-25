@@ -1,4 +1,16 @@
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kconnect-dev-svc-01
+spec:
+  selector:
+    app: kconnect-dev-http-01
+  ports:
+  - name: rest
+    port: 8083
+    targetPort: 8083
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,7 +33,7 @@ spec:
         resources:
           limits:
             memory: "1500Mi"
-            cpu: "1000m"
+            cpu: "500m"
         ports:
         - containerPort: 8083
         env:
@@ -61,18 +73,6 @@ spec:
         - |
           confluent-hub install --no-prompt confluentinc/kafka-connect-http-source:latest
           /etc/confluent/docker/run
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: kconnect-dev-svc-01
-spec:
-  selector:
-    app: kconnect-dev-http-01
-  ports:
-  - name: rest
-    port: 8083
-    targetPort: 8083
 ---
 apiVersion: apps/v1
 kind: Deployment

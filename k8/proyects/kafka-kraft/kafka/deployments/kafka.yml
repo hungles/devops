@@ -19,22 +19,18 @@ spec:
         instance: kafka-dev-controller-01
     spec:
       volumes:
-      - name: logs-dir-kafka
+      - name: controller-1-topic
         persistentVolumeClaim:
           claimName: pvc-kafka-volume
       containers:
       - name: kafka-dev-controller-01
-        image: confluentinc/cp-kafka:7.5.0
-        resources:
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"
+        image: confluentinc/cp-server
+        volumeMounts:
+        - mountPath: /opt
+          name: controller-1-topic
         ports:
         - containerPort: 9092
         - containerPort: 9093
-        volumeMounts:
-        - mountPath: "/var/lib/kafka/data"
-          name: logs-dir-kafka
         env:
         - name: KAFKA_PROCESS_ROLES
           value: controller
@@ -50,8 +46,12 @@ spec:
           value: CONTROLLER:PLAINTEXT,BROKER_PLAINTEXT:PLAINTEXT
         - name: KAFKA_CONTROLLER_QUORUM_VOTERS
           value: 1@kafka-dev-svc-01:9093,2@kafka-dev-svc-02:9093
+        - name: KAFKA_METRIC_REPORTERS
+          value: io.confluent.metrics.reporter.ConfluentMetricsReporter
+        - name: CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS
+          value: kafka-dev-svc-03:9092
         - name: KAFKA_LOG_DIRS
-          value: /var/lib/kafka/data
+          value: /opt/kafka-topic-1/
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
           value: "1"
         - name: KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS
@@ -59,7 +59,7 @@ spec:
         - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
           value: "true"
         - name: CLUSTER_ID
-          value: MkU3OEVBNTcwNTJENDM2Qk
+          value: q1Sh-9_ISia_zwGINzRvyQ
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -80,13 +80,16 @@ spec:
         app: kafka-dev-controller-02
         instance: kafka-dev-controller-02
     spec:
+      volumes:
+      - name: controller-2-topic
+        persistentVolumeClaim:
+          claimName: pvc-kafka-volume
       containers:
       - name: kafka-dev-controller-02
-        image: confluentinc/cp-kafka:7.5.0
-        resources:
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"
+        image: confluentinc/cp-server
+        volumeMounts:
+        - mountPath: /opt
+          name: controller-2-topic
         ports:
         - containerPort: 9092
         - containerPort: 9093
@@ -106,7 +109,11 @@ spec:
         - name: KAFKA_CONTROLLER_QUORUM_VOTERS
           value: 1@kafka-dev-svc-01:9093,2@kafka-dev-svc-02:9093
         - name: KAFKA_LOG_DIRS
-          value: /var/lib/kafka/data
+          value: /opt/kafka-topic-2/
+        - name: KAFKA_METRIC_REPORTERS
+          value: io.confluent.metrics.reporter.ConfluentMetricsReporter
+        - name: CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS
+          value: kafka-dev-svc-03:9092
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
           value: "1"
         - name: KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS
@@ -114,7 +121,7 @@ spec:
         - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
           value: "true"
         - name: CLUSTER_ID
-          value: MkU3OEVBNTcwNTJENDM2Qk
+          value: q1Sh-9_ISia_zwGINzRvyQ
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -135,13 +142,16 @@ spec:
         app: kafka-dev-broker-01
         instance: kafka-dev-broker-01
     spec:
+      volumes:
+      - name: broker-1-topic
+        persistentVolumeClaim:
+          claimName: pvc-kafka-volume
       containers:
       - name: kafka-dev-broker-01
-        image: confluentinc/cp-kafka:7.5.0
-        resources:
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"
+        image: confluentinc/cp-server
+        volumeMounts:
+        - mountPath: /opt
+          name: broker-1-topic
         ports:
         - containerPort: 9092
         - containerPort: 9093
@@ -160,8 +170,12 @@ spec:
           value: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
         - name: KAFKA_CONTROLLER_QUORUM_VOTERS
           value: 1@kafka-dev-svc-01:9093,2@kafka-dev-svc-02:9093
+        - name: KAFKA_METRIC_REPORTERS
+          value: io.confluent.metrics.reporter.ConfluentMetricsReporter
+        - name: CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS
+          value: localhost:9092
         - name: KAFKA_LOG_DIRS
-          value: /var/lib/kafka/data
+          value: /opt/kafka-topic-3
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
           value: "1"
         - name: KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS
@@ -169,5 +183,67 @@ spec:
         - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
           value: "true"
         - name: CLUSTER_ID
-          value: MkU3OEVBNTcwNTJENDM2Qk
+          value: q1Sh-9_ISia_zwGINzRvyQ
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-dev-broker-02
+  labels:
+    app: kafka-dev-broker-02
+    instance: kafka-dev-broker-02
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-dev-broker-02
+      instance: kafka-dev-broker-02
+  template:
+    metadata:
+      labels:
+        app: kafka-dev-broker-02
+        instance: kafka-dev-broker-02
+    spec:
+      volumes:
+      - name: broker-2-topic
+        persistentVolumeClaim:
+          claimName: pvc-kafka-volume
+      containers:
+      - name: kafka-dev-broker-02
+        image: confluentinc/cp-server
+        volumeMounts:
+        - mountPath: /opt
+          name: broker-2-topic
+        ports:
+        - containerPort: 9092
+        - containerPort: 9093
+        env:
+        - name: KAFKA_PROCESS_ROLES
+          value: broker
+        - name: KAFKA_NODE_ID
+          value: "4"
+        - name: KAFKA_LISTENERS
+          value: PLAINTEXT://:9092
+        - name: KAFKA_CONTROLLER_LISTENER_NAMES
+          value: CONTROLLER
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: PLAINTEXT://kafka-dev-svc-04:9092
+        - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+          value: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+        - name: KAFKA_CONTROLLER_QUORUM_VOTERS
+          value: 1@kafka-dev-svc-01:9093,2@kafka-dev-svc-02:9093
+        - name: KAFKA_METRIC_REPORTERS
+          value: io.confluent.metrics.reporter.ConfluentMetricsReporter
+        - name: CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS
+          value: localhost:9092
+        - name: KAFKA_LOG_DIRS
+          value: /opt/kafka-topic-4
+        - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+          value: "1"
+        - name: KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS
+          value: "0"
+        - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
+          value: "true"
+        - name: CLUSTER_ID
+          value: q1Sh-9_ISia_zwGINzRvyQ
 ---
