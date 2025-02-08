@@ -1,0 +1,15 @@
+masters:
+  hosts:
+    master-01:
+      ansible_host: 192.168.100.160
+
+
+workers:
+  hosts:
+    worker-01:
+      ansible_host: 192.168.100.170
+
+k8-cluster:
+  children:
+    masters:
+    workers:
