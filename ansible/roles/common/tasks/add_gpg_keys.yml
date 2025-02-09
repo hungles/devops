@@ -1,0 +1,36 @@
+---
+- name: Descargar la llave GPG de Kubernetes en formato ASCII
+  ansible.builtin.get_url:
+    url:  https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
+    dest: /tmp/kubernetes.gpg
+    
+- name: Convertir la llave GPG de Kubernetes en binario y copiarla en /etc/apt/trusted.gpg.d
+  ansible.builtin.command:
+    cmd: gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg /tmp/kubernetes.gpg
+    creates: /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg
+  register: gpg_log
+    
+- name: Copiar url del repositorio a /etc/apt/sources.list.d
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/kubernetes.list
+    content: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /"
+
+- name: Descargar la llave GPG de docker en formato ascii
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /tmp/containerd.gpg
+        
+- name: Convertir la llave GPG de docker en binario y copiarla en /etc/apt/trusted.gpg.d
+  ansible.builtin.command:
+    cmd: gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg /tmp/containerd.gpg
+    creates: /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg
+  register: gpg_log
+
+- name: Mostrar resultado de gpg
+  ansible.builtin.debug:
+    var: gpg_log
+
+- name: Copiar url del repositorio de docker a /etc/apt/sources.list.d
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/docker.list
+    content: "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable"

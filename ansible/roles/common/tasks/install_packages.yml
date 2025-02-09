@@ -1,0 +1,5 @@
+---
+- name: Crear cluster de kubernetes
+  hosts: k8-cluster
+  become: yes
+  tasks:

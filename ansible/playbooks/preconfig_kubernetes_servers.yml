@@ -1,0 +1,5 @@
+---
+- name: Preconfigure the installation of Kubernetes Cluster
+  hosts: k8-cluster
+  roles:
+    - common
