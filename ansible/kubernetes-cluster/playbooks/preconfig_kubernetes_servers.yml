@@ -1,5 +1,7 @@
 ---
-- name: Preconfigure the installation of Kubernetes Cluster
+- name: Configure and install kubernetes and runtime
   hosts: k8-cluster
   roles:
-    - common
+    #  - common
+     - k8s
+    #  - runtime

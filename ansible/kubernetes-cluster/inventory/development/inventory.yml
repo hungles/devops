@@ -1,14 +1,14 @@
 k8-masters:
   hosts:
     k8-master-01:
-      ansible_host: 192.168.100.160
+      ansible_host: 192.168.18.160
 
 k8-workers:
   hosts:
     k8-worker-01:
-      ansible_host: 192.168.100.170
+      ansible_host: 192.168.18.170
     k8-worker-02:
-      ansible_host: 192.168.100.180
+      ansible_host: 192.168.18.180
 
 k8-cluster:
   children:

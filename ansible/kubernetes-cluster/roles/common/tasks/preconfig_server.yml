@@ -1,0 +1,44 @@
+---
+- name: Preconfigurar los servidores antes de instalar herramientas de kubernetes
+  block:
+    - name: Actualizar todos los paquetes del sistema
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: full
+
+    - name: Reiniciar despues de actualizar paquetes
+      ansible.builtin.reboot:
+
+    - name: Instalar herramientas necesarias
+      apt:
+        update_cache: true
+        name:
+          - curl
+          - apt-transport-https
+          - gnupg2
+          - software-properties-common
+          - ca-certificates
+          - wget
+    
+    - name: Desactivar la memoria swap
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '^([^#].*swap.*)'
+        line: '#\1'
+        backrefs: yes
+    
+    - name: Ejecutar comando mount
+      ansible.builtin.command:
+        cmd: mount -a
+
+    - name: Add the overlay module
+      community.general.modprobe:
+        name: overlay
+        state: present
+    
+    - name: Add the br_netfilter module
+      community.general.modprobe:
+        name: br_netfilter
+        state: present
+
+        

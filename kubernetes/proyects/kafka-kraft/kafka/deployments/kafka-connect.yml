@@ -1,0 +1,123 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kconnect-dev-svc-01
+spec:
+  selector:
+    app: kconnect-dev-http-01
+  ports:
+  - name: rest
+    port: 8083
+    targetPort: 8083
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kconnect-dev-http-01
+  labels:
+    app: kconnect-dev-http-01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kconnect-dev-http-01
+  template:
+    metadata:
+      labels:
+        app: kconnect-dev-http-01
+    spec:
+      containers:
+      - name: kconnect-dev-http-01
+        image: scarmona04/kafka-connect-rest:v1
+        resources:
+          limits:
+            memory: "1000Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8083
+        env:
+        - name: CONNECT_BOOTSTRAP_SERVERS
+          value: "my-cluster-kafka-bootstrap:9092"
+        - name: CONNECT_REST_PORT
+          value: "8083"
+        - name: CONNECT_GROUP_ID
+          value: "connect-cluster"
+        - name: CONNECT_CONFIG_STORAGE_TOPIC
+          value: "connect-configs"
+        - name: CONNECT_OFFSET_STORAGE_TOPIC
+          value: "connect-offsets"
+        - name: CONNECT_STATUS_STORAGE_TOPIC
+          value: "connect-status"
+        - name: CONNECT_REST_ADVERTISED_HOST_NAME
+          value: "kconnect-dev-http-01"
+        - name: CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_STATUS_STORAGE_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_KEY_CONVERTER
+          value: "org.apache.kafka.connect.storage.StringConverter"
+        - name: CONNECT_VALUE_CONVERTER
+          value: "org.apache.kafka.connect.storage.StringConverter"
+        - name: CONNECT_INTERNAL_KEY_CONVERTER
+          value: "org.apache.kafka.connect.json.JsonConverter"
+        - name: CONNECT_INTERNAL_VALUE_CONVERTER
+          value: "org.apache.kafka.connect.json.JsonConverter"
+        - name: CONNECT_PLUGIN_PATH
+          value: "/usr/share/java,/usr/share/confluent-hub-components"
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: create-connectors-http
+# spec:
+#   selector:
+#     matchLabels:
+#       app: create-connectors-http
+#   template:
+#     metadata:
+#       labels:
+#         app: create-connectors-http
+#     spec:
+#       containers:
+#       - name: create-connectors-http
+#         image: nginx:latest
+#         resources:
+#           limits:
+#             memory: "500Mi"
+#             cpu: "500m"
+#         command:
+#         - bash
+#         - -c
+#         - |
+#           #Espera a que Kafka Connect esté listo
+#             while true; do
+#               #Verifica si esta disponible el conector de HttpSource
+#               if curl -s http://kconnect-dev-svc-01:8083/connector-plugins | grep -q "io.confluent.connect.http.HttpSourceConnector"; then
+#                 echo "El conector esta disponible para su uso"
+#                 break
+#               else
+#                 echo "El conector todavia no esta disponible"
+#               fi
+#               sleep 10
+#             done
+#             #Crear el conector HTTP
+#             curl -i -X POST -H "Accept: application/json" -H "Content-Type: application/json" http://kconnect-dev-svc-01:8083/connectors/ -d '{
+#               "name": "json-anomalies",
+#               "config": {
+#                 "connector.class": "io.confluent.connect.http.HttpSourceConnector",
+#                 "topic.name.pattern": "json-api",
+#                 "url": "http://jsontestapi-dev-svc-01:8000/proxy",
+#                 "tasks.max": "1",
+#                 "http.offset.mode": "SIMPLE_INCREMENTING",
+#                 "http.initial.offset": "1",
+#                 "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+#                 "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+#                 "confluent.topic.bootstrap.servers": "kafka-dev-svc-03:9092",
+#                 "confluent.license": "",
+#                 "confluent.topic.replication.factor": "1"
+#               }
+#             }'
+
+

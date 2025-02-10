@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-controller-config
+data:
+  KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+  KAFKA_CONTROLLER_QUORUM_VOTERS: "0@kafka-0.kafka-svc.default.svc.cluster.local:9093,1@kafka-1.kafka-svc.default.svc.cluster.local:9093"
+  KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+  KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: "0"
+  KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+  CLUSTER_ID: "q1Sh-9_ISia_zwGINzRvyQ"

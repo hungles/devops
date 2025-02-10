@@ -1,0 +1,37 @@
+---
+- name: Configure servers for Kubernetes
+  block:
+    - name: Install Kubernetes tools
+      apt:
+        update_cache: yes
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+
+    - name: Prevent kubelet from being updated
+      ansible.builtin.dpkg_selections:
+        name: kubelet
+        selection: hold
+
+    - name: Prevent kubeadm from being updated
+      ansible.builtin.dpkg_selections:
+        name: kubeadm
+        selection: hold
+
+    - name: Prevent kubectl from being updated
+      ansible.builtin.dpkg_selections:
+        name: kubectl
+        selection: hold
+
+    - name: Create configuration file from template
+      ansible.builtin.template:
+        src: sysctl-config.j2
+        dest: /etc/sysctl.d/kubernetes.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Apply sysctl settings
+      ansible.builtin.command:
+        cmd: sysctl --system
