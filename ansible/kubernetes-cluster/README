@@ -1,94 +1,100 @@
-Kubernetes Cluster Deployment with Ansible
+# Kubernetes Cluster Deployment with Ansible
 
-Overview
+## Overview
 
 This project automates the deployment of a Kubernetes cluster with one master node and two worker nodes using Ansible. The setup ensures that the cluster is configured correctly with essential components and ready for workload deployment.
 
-Architecture
+## Architecture
 
-1 Master Node: Controls the cluster, schedules workloads, and manages API requests.
+- **1 Master Node**: Controls the cluster, schedules workloads, and manages API requests.
+- **2 Worker Nodes**: Execute workloads (Pods and Containers) and communicate with the master node.
+- **Ansible**: Automates the provisioning and configuration of all nodes.
 
-2 Worker Nodes: Execute workloads (Pods and Containers) and communicate with the master node.
-
-Ansible: Automates the provisioning and configuration of all nodes.
-
-Prerequisites
+## Prerequisites
 
 Before running the Ansible playbook, ensure the following requirements are met:
 
-Control Node (your machine running Ansible)
+### Control Node (your machine running Ansible)
+- Ansible installed (`ansible --version` to check)
+- SSH access to all nodes (passwordless authentication recommended)
+- Inventory file listing all nodes
 
-Ansible installed (ansible --version to check)
+### Target Nodes (Master & Workers)
+- Ubuntu 22.04
+- SSH enabled
+- Python installed
 
-SSH access to all nodes (passwordless authentication recommended)
+## Setup & Installation
 
-Inventory file listing all nodes
+### 1. Clone the Repository
 
-Target Nodes (Master & Workers)
+```bash
+git clone https://github.com/hungles/devops.git
+cd ansible/kubernetes-cluster
+```
+## 2. Update Inventory File
 
-Ubuntu/Debian-based OS
+Modify `inventory.yml` with the IP addresses of your nodes:
 
-SSH enabled
+```yml
+k8-masters:
+  hosts:
+    k8-master-01:
+      ansible_host: "master-ip"
 
-Python installed
+k8-workers:
+  hosts:
+    k8-worker-01:
+      ansible_host: "worker-01-ip"
+    k8-worker-02:
+      ansible_host: "worker-02-ip"
 
-Setup & Installation
+k8-cluster:
+  children:
+    k8-masters:
+    k8-workers:
+```
 
-1. Clone the Repository
+## 3. Edit the hosts_vars.yml File
 
-git clone https://github.com/your-repo/k8s-ansible-deployment.git
-cd k8s-ansible-deployment
+Modify `roles/vars/hosts_vars.yml` with the ip and hostname from your servers
 
-2. Update Inventory File
+```yml
+my_hosts:
+  - ip: "master-ip"
+    hostname: "worker-01-hostname"
+  - ip: "worker-01-hostname"
+    hostname: "worker-01-hostname"
+  - ip: "worker-02-ip"
+    hostname: "worker-02-hostname"
+```
 
-Modify inventory.ini with the IP addresses of your nodes:
-
-[master]
-192.168.1.10
-
-[workers]
-192.168.1.11
-192.168.1.12
-
-[k8s:children]
-master
-workers
-
-3. Run the Ansible Playbook
+## 4. Run the Ansible Playbook
 
 Execute the playbook to set up the cluster:
 
-ansible-playbook -i inventory.ini k8s-deploy.yml
+```bash
+ansible-playbook -i inventory/development/inventory.yml playbooks/preconfig_kubernetes_servers -K
+```
+# Features
 
-4. Verify the Cluster
+- **Automated installation of Kubernetes components**: Installs `kubeadm`, `kubelet`, and `kubectl` seamlessly.
+- **Secure SSH-based deployment**: Ensures secure communication between nodes using SSH.
+- **Configurable inventory for scaling**: Easily scale your cluster by updating the inventory file.
+- **Automatic worker node joining to the cluster**: Simplifies the process of adding worker nodes to the cluster.
 
-After installation, SSH into the master node and check the cluster status:
+# Future Improvements
 
-kubectl get nodes
+- **Add support for HA (High Availability)**: Implement a highly available control plane for production environments.
+- **Deploy a CNI (Container Network Interface) plugin**: Integrate plugins like Calico or Flannel for networking.
+- **Automate Helm installation**: Simplify application deployment using Helm.
+- **Implement monitoring with Prometheus and Grafana**: Set up monitoring and visualization for cluster metrics.
 
-Expected output:
+# License
 
-NAME           STATUS   ROLES    AGE     VERSION
-master-node    Ready    master   Xd      v1.XX.X
-worker-node1   Ready    <none>   Xd      v1.XX.X
-worker-node2   Ready    <none>   Xd      v1.XX.X
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
-Features
+# Author
 
-Automated installation of Kubernetes components (kubeadm, kubelet, kubectl)
-
-Secure SSH-based deployment
-
-Configurable inventory for scaling
-
-Automatic worker node joining to the cluster
-
-Future Improvements
-
-Add support for HA (High Availability)
-
-Deploy a CNI (Container Network Interface) plugin (e.g., Calico, Flannel)
-
-Automate Helm installation
-
-Implement monitoring with Prometheus and Grafana
+**[Sebastian Carmona]** - Kubernetes & Ansible Enthusiast  
+[GitHub Profile](https://github.com/hungles) | [Email](scarmona04@hotmail.com)

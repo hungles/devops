@@ -1,0 +1,7 @@
+my_hosts:
+  - ip: "192.168.18.160"
+    hostname: "k8-master"
+  - ip: "192.168.18.170"
+    hostname: "k8-worker-01"
+  - ip: "192.168.18.180"
+    hostname: "k8-worker-02"
