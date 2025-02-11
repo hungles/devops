@@ -1,0 +1,94 @@
+Kubernetes Cluster Deployment with Ansible
+
+Overview
+
+This project automates the deployment of a Kubernetes cluster with one master node and two worker nodes using Ansible. The setup ensures that the cluster is configured correctly with essential components and ready for workload deployment.
+
+Architecture
+
+1 Master Node: Controls the cluster, schedules workloads, and manages API requests.
+
+2 Worker Nodes: Execute workloads (Pods and Containers) and communicate with the master node.
+
+Ansible: Automates the provisioning and configuration of all nodes.
+
+Prerequisites
+
+Before running the Ansible playbook, ensure the following requirements are met:
+
+Control Node (your machine running Ansible)
+
+Ansible installed (ansible --version to check)
+
+SSH access to all nodes (passwordless authentication recommended)
+
+Inventory file listing all nodes
+
+Target Nodes (Master & Workers)
+
+Ubuntu/Debian-based OS
+
+SSH enabled
+
+Python installed
+
+Setup & Installation
+
+1. Clone the Repository
+
+git clone https://github.com/your-repo/k8s-ansible-deployment.git
+cd k8s-ansible-deployment
+
+2. Update Inventory File
+
+Modify inventory.ini with the IP addresses of your nodes:
+
+[master]
+192.168.1.10
+
+[workers]
+192.168.1.11
+192.168.1.12
+
+[k8s:children]
+master
+workers
+
+3. Run the Ansible Playbook
+
+Execute the playbook to set up the cluster:
+
+ansible-playbook -i inventory.ini k8s-deploy.yml
+
+4. Verify the Cluster
+
+After installation, SSH into the master node and check the cluster status:
+
+kubectl get nodes
+
+Expected output:
+
+NAME           STATUS   ROLES    AGE     VERSION
+master-node    Ready    master   Xd      v1.XX.X
+worker-node1   Ready    <none>   Xd      v1.XX.X
+worker-node2   Ready    <none>   Xd      v1.XX.X
+
+Features
+
+Automated installation of Kubernetes components (kubeadm, kubelet, kubectl)
+
+Secure SSH-based deployment
+
+Configurable inventory for scaling
+
+Automatic worker node joining to the cluster
+
+Future Improvements
+
+Add support for HA (High Availability)
+
+Deploy a CNI (Container Network Interface) plugin (e.g., Calico, Flannel)
+
+Automate Helm installation
+
+Implement monitoring with Prometheus and Grafana
