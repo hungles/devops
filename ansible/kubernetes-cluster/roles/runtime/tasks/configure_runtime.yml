@@ -1,6 +1,7 @@
 ---
 - name: Instalar y configurar el runtime de kubernetes
   block:
+
     - name: Instalar herramientas de kubernetes
       apt:
         update_cache: true
@@ -16,9 +17,28 @@
       ansible.builtin.shell: containerd config default | tee /etc/containerd/config.toml
       args:
         creates: /etc/containerd/config.toml
+    
+    - name: Modificar SystemdCgroup en /etc/containerd/config.toml
+      replace:
+        path: /etc/containerd/config.toml
+        regexp: 'SystemdCgroup\s*=\s*false'
+        replace: 'SystemdCgroup = true'
 
     - name: Restart containerd service
       ansible.builtin.systemd:
         name: containerd
         state: restarted
         enabled: yes
+      
+    - name: Get status of containerd
+      ansible.builtin.command:
+        cmd: systemctl status containerd.service
+      register: status_containerd
+
+    - name: Imprimir el resultado en pantalla
+      debug:
+        msg: "{{ status_containerd.stdout }}"
+
+    - name: Esperar a que el usuario presione Enter para continuar
+      pause:
+        prompt: "Presiona Enter para continuar..."

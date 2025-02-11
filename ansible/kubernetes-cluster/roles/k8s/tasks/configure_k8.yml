@@ -23,15 +23,3 @@
       ansible.builtin.dpkg_selections:
         name: kubectl
         selection: hold
-
-    - name: Create configuration file from template
-      ansible.builtin.template:
-        src: sysctl-config.j2
-        dest: /etc/sysctl.d/kubernetes.conf
-        owner: root
-        group: root
-        mode: '0644'
-
-    - name: Apply sysctl settings
-      ansible.builtin.command:
-        cmd: sysctl --system

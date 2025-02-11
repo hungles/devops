@@ -2,6 +2,6 @@
 - name: Configure and install kubernetes and runtime
   hosts: k8-cluster
   roles:
-    #  - common
+     - common
+     - runtime
      - k8s
-    #  - runtime

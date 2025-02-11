@@ -1,0 +1,23 @@
+---
+- name: Instalar herramientas necesarias
+  block:
+    - name: Actualizar todos los paquetes del sistema
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: full
+
+    - name: Reiniciar despues de actualizar paquetes
+      ansible.builtin.reboot:
+
+    - name: Instalar herramientas necesarias
+      apt:
+        update_cache: true
+        name:
+          - curl
+          - apt-transport-https
+          - gnupg2
+          - software-properties-common
+          - ca-certificates
+          - wget
+
+        

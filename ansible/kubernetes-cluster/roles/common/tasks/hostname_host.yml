@@ -1,0 +1,10 @@
+---
+- name: Change the hostname and modify the /etc/hosts
+  block:
+
+    - name: Añadir las entradas al archivo /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "{{ item.ip }} {{ item.hostname }}"
+        state: present
+      loop: "{{ my_hosts }}"
