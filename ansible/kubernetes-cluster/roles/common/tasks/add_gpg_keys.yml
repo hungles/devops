@@ -1,0 +1,42 @@
+---
+- name: Download and convert GPG keys
+  block:
+    - name: Download Kubernetes GPG key in ASCII format
+      ansible.builtin.get_url:
+        url: "{{ k8_gpg }}"
+        dest: /tmp/kubernetes.gpg
+
+    - name: Convert Kubernetes GPG key to binary and copy to /etc/apt/trusted.gpg.d
+      ansible.builtin.command:
+        cmd: gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg /tmp/kubernetes.gpg
+        creates: /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
+
+    - name: Download Docker GPG key in ASCII format
+      ansible.builtin.get_url:
+        url: "{{ docker_gpg }}"
+        dest: /tmp/containerd.gpg
+
+    - name: Convert Docker GPG key to binary and copy to /etc/apt/trusted.gpg.d
+      ansible.builtin.command:
+        cmd: gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg /tmp/containerd.gpg
+        creates: /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg
+  rescue:
+    - name: Handle errors in downloading or converting GPG keys
+      ansible.builtin.debug:
+        msg: "Error downloading or converting GPG keys"
+
+- name: Configure Kubernetes and Docker repositories
+  block:
+    - name: Copy Kubernetes repository URL to /etc/apt/sources.list.d
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/kubernetes.list
+        content: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] {{ k8_repo }}"
+
+    - name: Copy Docker repository URL to /etc/apt/sources.list.d
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/docker.list
+        content: "deb [signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.gpg] {{ docker_repo }}"
+  rescue:
+    - name: Handle errors in repository configuration
+      ansible.builtin.debug:
+        msg: "Error configuring repositories"

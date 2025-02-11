@@ -1,0 +1,13 @@
+---
+- name: Desabilitar memoria Swap de los nodos
+  block:
+    - name: Desactivar la memoria swap
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '^([^#].*swap.*)'
+        line: '#\1'
+        backrefs: yes
+    
+    - name: Ejecutar comando mount
+      ansible.builtin.command:
+        cmd: mount -a

@@ -1,0 +1,25 @@
+---
+- name: Configure servers for Kubernetes
+  block:
+    - name: Install Kubernetes tools
+      apt:
+        update_cache: yes
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+
+    - name: Prevent kubelet from being updated
+      ansible.builtin.dpkg_selections:
+        name: kubelet
+        selection: hold
+
+    - name: Prevent kubeadm from being updated
+      ansible.builtin.dpkg_selections:
+        name: kubeadm
+        selection: hold
+
+    - name: Prevent kubectl from being updated
+      ansible.builtin.dpkg_selections:
+        name: kubectl
+        selection: hold

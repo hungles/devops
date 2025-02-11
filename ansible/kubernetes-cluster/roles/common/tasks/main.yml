@@ -1,0 +1,16 @@
+---
+#roles/common/tasks/main.yml
+- name: Incluir tarea para actualizar los servidores
+  ansible.builtin.include_tasks: hostname_host.yml
+
+- name: Incluir tarea para agregar llaves GPG
+  ansible.builtin.include_tasks: add_gpg_keys.yml
+
+- name: Incluir tarea para actualizar los servidores
+  ansible.builtin.include_tasks: disable-swap-memory.yml
+
+- name: Incluir tarea para actualizar los servidores
+  ansible.builtin.include_tasks: install-tools.yml
+
+- name: Incluir tarea para actualizar los servidores
+  ansible.builtin.include_tasks: preconf-containerd.yml

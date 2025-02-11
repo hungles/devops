@@ -1,4 +1,0 @@
----
-#roles/common/tasks/main.yml
-- name: Incluir tarea para agregar llaves GPG
-  ansible.builtin.include_tasks: add_gpg_keys.yml
