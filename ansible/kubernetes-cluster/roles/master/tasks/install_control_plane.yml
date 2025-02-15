@@ -1,0 +1,40 @@
+---
+- name: Install the components of control plane
+  block:
+    - name: Install with kubeadm
+      ansible.builtin.command:
+        cmd: kubeadm init --apiserver-advertise-address=192.168.18.160 --pod-network-cidr "{{ subnet_kubernetes }}"
+      register: kubeadm_status
+
+    - name: Show the kubeadm kubeadm status
+      ansible.builtin.debug:
+        msg: "{{ kubeadm_status }}"
+    
+    - name: Create .kube directory
+      ansible.builtin.file:
+        path: "/root/.kube"
+        state: directory
+        mode: '0755'
+        owner: "root"
+        group: "root"
+
+    - name: Copy admin.conf to kubeconfig
+      ansible.builtin.copy:
+        src: /etc/kubernetes/admin.conf
+        dest: "/root/.kube/config"
+        remote_src: yes
+        owner: "root"
+        group: "root"
+        mode: '0644'
+
+    - name: Apply Calico CNI
+      ansible.builtin.command:
+        cmd: kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+
+    - name: Generar un token de unión
+      command: kubeadm token create --print-join-command
+      register: join_command
+
+    - name: Guardar el comando de unión como un hecho
+      ansible.builtin.set_fact:
+        kubeadm_join_command: "{{ join_command.stdout }}"

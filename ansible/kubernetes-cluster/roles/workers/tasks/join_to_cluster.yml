@@ -1,0 +1,5 @@
+---
+- name: Join workers to the Kubernetes cluster
+  block:
+    - name: Ejecutar el comando de unión
+      command: "{{ hostvars[groups['k8-masters'][0]].kubeadm_join_command }}"

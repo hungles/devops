@@ -1,5 +1,13 @@
 ---
 #roles/common/tasks/main.yml
+- name: Cargar variables desde hosts_vars.yml
+  include_vars:
+    file: "../vars/hosts_vars.yml"
+
+- name: Cargar variables desde hosts_vars.yml
+  include_vars:
+    file: "../vars/repo_vars.yml"
+
 - name: Incluir tarea para actualizar los servidores
   ansible.builtin.include_tasks: hostname_host.yml
 

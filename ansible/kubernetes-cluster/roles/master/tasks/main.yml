@@ -1,0 +1,3 @@
+---
+- name: Add task install control plane
+  ansible.builtin.include_tasks: install_control_plane.yml

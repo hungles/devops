@@ -15,8 +15,6 @@
 
     - name: Generate default containerd configuration
       ansible.builtin.shell: containerd config default | tee /etc/containerd/config.toml
-      args:
-        creates: /etc/containerd/config.toml
     
     - name: Modificar SystemdCgroup en /etc/containerd/config.toml
       replace:
