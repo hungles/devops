@@ -3,7 +3,7 @@
   block:
     - name: Install with kubeadm
       ansible.builtin.command:
-        cmd: kubeadm init --apiserver-advertise-address=192.168.18.160 --pod-network-cidr "{{ subnet_kubernetes }}"
+        cmd: kubeadm init --apiserver-advertise-address=4.246.172.112 --pod-network-cidr "{{ subnet_kubernetes }}"
       register: kubeadm_status
 
     - name: Show the kubeadm kubeadm status
