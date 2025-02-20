@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Bienvenido al script para automatizar la instalacion de un Cluster de Kubernetes en sus servidores"
+
+echo "Se esta usando Vagrant para crear las Virtuales"
+
 # Prompt the user for their local subnet
 read -p "Enter your local subnet (example: 192.168.1): " subnet
 
@@ -63,9 +67,19 @@ sed -i "s/bridge: \"[^\"]*\"/bridge: \"$interface\"/g" $vagrant_file
 #Creando cluster
 echo "Empezando con la creacion de las virtuales en Virtualbox"
 
+if ! command -v vagrant &>/dev/null; then
+    echo "vagrant no está instalado. Instalándolo primero..."
+    # Intentar instalar vagrant
+    wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+    sudo apt update && sudo apt install vagrant
+    echo "vagrant instalado correctamente."
+else
+    echo "vagrant ya está instalado."
+fi
+
 vagrant up
 
-sleep 30
 
-ansible-playbook -i inventory/development/inventory.yml playbooks/preconfig_kubernetes_servers.yml -K
-ansible-playbook -i inventory/development/inventory.yml playbooks/configure_nodes.yml -K
+# ansible-playbook -i inventory/development/inventory.yml playbooks/preconfig_kubernetes_servers.yml -K
+# ansible-playbook -i inventory/development/inventory.yml playbooks/configure_nodes.yml -K
