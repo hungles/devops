@@ -1,0 +1,17 @@
+---
+- name: Actualización completa del sistema operativo según su familia
+  hosts: all
+  become: yes
+  tasks:
+    - name: Estas usando un SO de Debian
+      apt:
+        upgrade: full
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Estas usando un SO de Red Hat (usando DNF)
+      dnf:
+        name: "*"
+        state: latest
+        update_cache: yes
+      when: ansible_os_family == "RedHat"

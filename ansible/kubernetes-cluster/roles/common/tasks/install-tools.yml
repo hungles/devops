@@ -1,23 +1,37 @@
 ---
 - name: Instalar herramientas necesarias
   block:
-    - name: Actualizar todos los paquetes del sistema
-      ansible.builtin.apt:
-        update_cache: true
-        upgrade: full
 
-    - name: Reiniciar despues de actualizar paquetes
-      ansible.builtin.reboot:
-
-    - name: Instalar herramientas necesarias
+    - name: Estas usando un SO de Debian
       apt:
-        update_cache: true
-        name:
-          - curl
-          - apt-transport-https
-          - gnupg2
-          - software-properties-common
-          - ca-certificates
-          - wget
+        upgrade: full
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Estas usando un SO de RedHat
+      dnf:
+        name: "*"
+        state: latest
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+    
+    # - name: Actualizar todos los paquetes del sistema
+    #   ansible.builtin.apt:
+    #     update_cache: true
+    #     upgrade: full
+
+    # - name: Reiniciar despues de actualizar paquetes
+    #   ansible.builtin.reboot:
+
+    # - name: Instalar herramientas necesarias
+    #   apt:
+    #     update_cache: true
+    #     name:
+    #       - curl
+    #       - apt-transport-https
+    #       - gnupg2
+    #       - software-properties-common
+    #       - ca-certificates
+    #       - wget
 
         
